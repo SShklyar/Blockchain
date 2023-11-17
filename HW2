@@ -1,0 +1,35 @@
+pragma solidity ^0.8.0;
+
+contract StorageContract {
+    // Добавление структуры
+    struct CustomStructure {
+        uint256 intValue;
+        string stringValue;
+        address addressValue;
+        bool boolValue;
+    }
+
+    // Добавление отображения
+    mapping(bytes32 => CustomStructure) public dataMapping;
+
+    // Добавление функции добавления структуры
+    function addStructure(bytes32 key, uint256 intValue, string memory stringValue, address addressValue, bool boolValue) public {
+        CustomStructure memory newStructure = CustomStructure(intValue, stringValue, addressValue, boolValue);
+        dataMapping[key] = newStructure;
+
+        // Добавление события для функции добавления
+        emit StructureAdded(key, intValue, stringValue, addressValue, boolValue);
+    }
+
+    // Добавление функции удаления структуры
+    function removeStructure(bytes32 key) public {
+        delete dataMapping[key];
+
+        // Добавление события для функции удаления
+        emit StructureRemoved(key);
+    }
+
+    // Добавление событий
+    event StructureAdded(bytes32 key, uint256 intValue, string stringValue, address addressValue, bool boolValue);
+    event StructureRemoved(bytes32 key);
+}
